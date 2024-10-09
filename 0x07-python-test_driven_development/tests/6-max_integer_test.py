@@ -1,64 +1,185 @@
 #!/usr/bin/python3
-"""Unittest for max_integer([..])
-"""
+"""Defines a class TestMaxInteger for max_integer([...])"""
+
+
 import unittest
 max_integer = __import__('6-max_integer').max_integer
 
-
 class TestMaxInteger(unittest.TestCase):
+    """
+    Test class that defines test cases for the max_integer function.
+    """
+    def test_positive_integers(self):
+        """Test for positive integers
+        """
+        test_list1 = [1, 2, 3, 4]
+        test_list2 = [ 4, 1, 2, 3]
+        test_list3 = [1, 2, 4, 2, 3]
 
-    """Suite test for max_integer function"""
+        self.assertEqual(max_integer(test_list1), 4)
+        self.assertEqual(max_integer(test_list2), 4)
+        self.assertEqual(max_integer(test_list3), 4)
 
-    def test_max_integer(self):
-        self.assertEqual(max_integer([5, -2, 100, 3]), 100)
+    def test_negative_integers(self):
+        """Test for negative integers
+        """
+        test_list1 = [-91, -31, -4, -2]
+        test_list2 = [-2, -91, -31, -4]
+        test_list3 = [-91, -123, -2, -31, -4]
+
+        self.assertEqual(max_integer(test_list1), -2)
+        self.assertEqual(max_integer(test_list2), -2)
+        self.assertEqual(max_integer(test_list3), -2)
+
+    def test_pos_neg_integers(self):
+        """Test for positive and negative integers
+        """
+        test_list = [-9, -14, 23, 98, 0, -9, -100, -1]
+        self.assertEqual(max_integer(test_list), 98)
 
     def test_empty_list(self):
-        self.assertEqual(max_integer([]), None)
+        """Test for an empty list
+        """
+        test_list = []
+        self.assertIsNone(max_integer(test_list), None)
 
-    def test_repeated_number(self):
-        self.assertEqual(max_integer([1000, 1000, 1000]), 1000)
+    def test_one_arg(self):
+        """Test for passing one number to list
+        """
+        test_list = [1]
+        self.assertEqual(max_integer(test_list), 1)
 
-    def test_float_numbers(self):
-        self.assertEqual(max_integer([50, 51, 50, 49]), 51)
-
-    def test_max_operated_integer(self):
-        self.assertEqual(max_integer([-3, -5 * -5, 12, -1]), 25)
-
-    def test_neg_numbers(self):
-        self.assertEqual(max_integer([-10, -5, -2, -1]), -1)
-
-    def test_max_at_beginning(self):
-        self.assertEqual(max_integer([5, 4, 3, 2, 1]), 5)
-
-    def test_zero_number(self):
-        self.assertEqual(max_integer([0, 0]), 0)
-
-    def test_big_list(self):
-        self.assertEqual(max_integer([
-            901, 902, 903, 904, 905, 906, 907, 908, 909, 910,
-            911, 912, 913, 914, 915, 916, 917, 918, 919, 920,
-            919, 918, 917, 1000, 915, 914, 913, 912, 911, 910,
-            909, 908, 907, 906, 905, 904, 903, 902, 901]), 1000)
-
-    def test_list_with_loop(self):
-        my_list = [1, 2, 3, 4, 5]
-        self.assertEqual(max_integer([i * 5 for i in my_list]), 25)
-
-    def test_one_number_in_a_list(self):
-        self.assertEqual(max_integer([1]), 1)
-
-    def test_string_number_in_a_list(self):
+    def test_none_argument(self):
+        """Test for passing None
+        """
         with self.assertRaises(TypeError):
-            max_integer([0, '1'])
+            max_integer(None)
 
-    def test_tuple_in_a_list(self):
+    def test_list_with_none(self):
+        """Test for list with None as one of its elements
+        """
         with self.assertRaises(TypeError):
-            max_integer([10, (20, 30)])
+            test_list = [1, 2, 3, 4, None]
+            max_integer(test_list)
+
+    def test_none_list(self):
+        """Test for passing None as list
+        """
+        test_list = [None]
+        self.assertIsNone(max_integer(test_list), None)
+
+    def test_integers_and_strings(self):
+        """Test for passing a string in the list
+        """
+        test_list = [1, 2, 3, 4, "2"]
+        with self.assertRaises(TypeError):
+            max_integer(test_list)
+
+    def test_string_numbers(self):
+        """Test for passing a string of numbers in list
+        """
+        test_list = ["1234"]
+        self.assertEqual(max_integer(test_list), "1234")
+
+    def test_same_integers(self):
+        """Test for passing same integers in list
+        """
+        test_list1 = [2, 2, 2, 2, 2]
+        test_list2 = [-55, -55, -55, -55]
+
+        self.assertEqual(max_integer(test_list1), 2)
+        self.assertEqual(max_integer(test_list2), -55)
+
+    def test_zero(self):
+        """Test for passing a zero in the list
+        """
+        test_list = [0]
+        self.assertEqual(max_integer(test_list), 0)
 
     def test_dictionary(self):
-        with self.assertRaises(KeyError):
-            max_integer({'key1': 1, 'key2': 2})
-
-    def test_number(self):
+        """Test for passing a dictionary as a list
+        """
+        test_list = [{'key1': 1}, {'key2': 2}]
         with self.assertRaises(TypeError):
-            max_integer(1)
+            max_integer(test_list)
+
+    def test_list_in_list(self):
+        """Test for list within a list
+        """
+        test_list = [1, 2, 3, 4, [1, 2, 3, 4]]
+        with self.assertRaises(TypeError):
+            max_integer(test_list)
+
+    def test_tuple_in_list(self):
+        """Test for tuple within a list
+        """
+        test_list = [1, 2, 3, 4, (1, 2, 3)]
+        with self.assertRaises(TypeError):
+            max_integer(test_list)
+
+    def test_set_in_list(self):
+        """Test for set within a list
+        """
+        test_list = [1, 2, 3, 4, {1, 2, 3}]
+        with self.assertRaises(TypeError):
+            max_integer(test_list)
+
+    def test_characters_list(self):
+        """Test for list of characters
+        """
+        test_list = ['a', 'c', 'd', 'v']
+        self.assertEqual(max_integer(test_list), 'v')
+
+    def test_numbers_character(self):
+        """Test for a list of numbers and character/s
+        """
+        test_list1 = [1, 2, 3, 's']
+        test_list2 = [-1, -2, -3, 's']
+        test_list3 = [1.1, 2.2, 3.3, 's']
+        test_list4 = [-1.1, 2.2, -3.3, 's']
+
+        with self.assertRaises(TypeError):
+            max_integer(test_list1)
+        with self.assertRaises(TypeError):
+            max_integer(test_list2)
+        with self.assertRaises(TypeError):
+            max_integer(test_list3)
+        with self.assertRaises(TypeError):
+            max_integer(test_list4)
+
+    def test_mixed_characters(self):
+        """Test for a mixture of characters in list including +ve and -ve
+        """
+        test_list1 = ['-a', '-d', '-k', '-w']
+        test_list2 = ['-a', '-d', 'k', '-w']
+        test_list3 = ['-a', 'z', 'k', '-w']
+
+        self.assertEqual(max_integer(test_list1), '-w')
+        self.assertEqual(max_integer(test_list2), 'k')
+        self.assertEqual(max_integer(test_list3), 'z')
+
+    def test_mixed_list(self):
+        """Test for a list containing various types
+        """
+        test_list1 = [1, "87", 3, "hot", -3, [78], {87}, '-z', 'a']
+
+        with self.assertRaises(TypeError):
+            max_integer(test_list1)
+
+    def test_float_numbers(self):
+        """Test for float numbers in a list including +ve and -ve
+        """
+        test_list1 = [9.1, 2.3, 6.8, 0.1]
+        test_list2 = [9, 2, 6.8, 0.1]
+        test_list3 = [-9.1, -2.3, 6.8, 0.1]
+        test_list4 = [-9, -2, -6.8, -0.1]
+        test_list5 = [-9, -2, -6.8, 0.1]
+
+        self.assertEqual(max_integer(test_list1), 9.1)
+        self.assertEqual(max_integer(test_list2), 9)
+        self.assertEqual(max_integer(test_list3), 6.8)
+        self.assertEqual(max_integer(test_list4), -0.1)
+        self.assertEqual(max_integer(test_list5), 0.1)
+
+if __name__ == '__main__':
+    unittest.main()
