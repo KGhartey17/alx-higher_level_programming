@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-"""
-Contains the inherits_from function
+"""4-inherits_from.py
 """
 
 
 def inherits_from(obj, a_class):
-    """returns true if obj is a subclass of a_class, otherwise false"""
-    return(issubclass(type(obj), a_class) and type(obj) != a_class)
+    """ Check for direct or indirect inheritance """
+    if (type(obj) != a_class):
+        return isinstance(obj, a_class)
+    return False
