@@ -1,10 +1,18 @@
 #!/usr/bin/python3
-"""4-inherits_from.py
+"""
+Method module
 """
 
 
 def inherits_from(obj, a_class):
-    """ Check for direct or indirect inheritance """
-    if (type(obj) != a_class):
-        return isinstance(obj, a_class)
-    return False
+    """check if object is an instance of a class
+    args:
+        obj: object to check
+        a_class: class to check
+    returns:
+        True or False
+    """
+
+    if type(obj) == a_class:
+        return False
+    return issubclass(type(obj), a_class)
