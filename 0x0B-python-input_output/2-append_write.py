@@ -4,7 +4,7 @@
 
 
 def append_write(filename="", text=""):
-    """ Function that appends to a text file
+    """Function that appends to a text file
 
     Args:
         filename: filename
@@ -15,5 +15,5 @@ def append_write(filename="", text=""):
 
     """
 
-    with open(filename, 'a', encoding="utf-8") as f:
+    with open(filename, "a", encoding="utf-8") as f:
         return f.write(text)
