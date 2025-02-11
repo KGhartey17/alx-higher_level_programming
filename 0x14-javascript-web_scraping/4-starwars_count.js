@@ -1,20 +1,24 @@
 #!/usr/bin/node
-// Number of films with the given character ID
-const request = require("request");
-let num = 0;
 
-request.get(process.argv[2], (error, response, body) => {
-  if (error) {
-    console.log(error);
-  } else {
-    const content = JSON.parse(body);
-    content.results.forEach((film) => {
-      film.characters.forEach((character) => {
-        if (character.includes(18)) {
-          num += 1;
-        }
-      });
-    });
-    console.log(num);
+const request = require('request');
+const starWarsUri = process.argv[2];
+let times = 0;
+
+request(starWarsUri, function (_err, _res, body) {
+  body = JSON.parse(body).results;
+
+  for (let i = 0; i < body.length; ++i) {
+    const characters = body[i].characters;
+
+    for (let j = 0; j < characters.length; ++j) {
+      const character = characters[j];
+      const characterId = character.split('/')[5];
+
+      if (characterId === '18') {
+        times += 1;
+      }
+    }
   }
+
+  console.log(times);
 });
